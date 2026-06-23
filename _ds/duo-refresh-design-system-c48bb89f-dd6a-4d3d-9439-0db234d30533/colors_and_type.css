@@ -1,0 +1,195 @@
+/* ============================================================
+   DUO Refresh — Design Tokens
+   Business & finance software in DATEV-inspired style.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ----------  COLORS  ---------------------------------------- */
+
+  /* Brand — petrol / dark teal */
+  --color-primary:           #2C5A6A;
+  --color-primary-hover:     #244C5A;
+  --color-primary-dark:      #1E3F4B;   /* sub-header, deeper accents */
+  --color-primary-tint:      #D7E2E7;   /* subtle backgrounds, inactive chips */
+
+  /* Action — fresh green */
+  --color-action:            #85B946;
+  --color-action-hover:      #76A93B;
+  --color-action-pressed:    #6A9A33;
+  --color-action-tint:       #EAF3D9;
+
+  /* Surfaces */
+  --color-bg-app:            #F0F2F4;   /* app background */
+  --color-bg-card:           #FFFFFF;   /* cards, panels */
+  --color-bg-sidebar:        #F8F9FA;   /* left sidebars */
+  --color-bg-hover:          #F4F6F7;   /* row hover */
+  --color-bg-subtle:         #F7F9FA;   /* table headers, banded rows */
+
+  /* Borders */
+  --color-border:            #E4E8EB;   /* default card / table border */
+  --color-border-strong:     #CED4D8;   /* inputs, separators */
+  --color-border-dashed:     #B0BEC5;   /* drop zones */
+
+  /* Text */
+  --color-text-main:         #333333;
+  --color-text-muted:        #666666;
+  --color-text-subtle:       #8A95A0;
+  --color-text-inverse:      #FFFFFF;
+  --color-text-link:         #2C5A6A;
+
+  /* Status */
+  --color-warning-bg:        #FFF8D6;
+  --color-warning-border:    #FFD700;
+  --color-warning-text:      #5C4A00;
+
+  --color-success:           #85B946;
+  --color-success-bg:        #EAF3D9;
+
+  --color-danger:            #C0392B;
+  --color-danger-bg:         #FBEAE8;
+
+  --color-info:              #2C5A6A;
+  --color-info-bg:           #E5EDF0;
+
+  /* Tag / Badge palette */
+  --color-tag-violet:        #9B59B6;
+  --color-tag-violet-bg:     #F1E6F6;
+  --color-tag-petrol:        #2C5A6A;
+  --color-tag-petrol-bg:     #D7E2E7;
+  --color-tag-amber:         #D69020;
+  --color-tag-amber-bg:      #FBEFD2;
+  --color-tag-grey:          #5A6670;
+  --color-tag-grey-bg:       #E8ECEE;
+
+  /* ----------  TYPOGRAPHY  ----------------------------------- */
+
+  --font-sans: 'Open Sans', 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
+  /* Base scale (16px root) */
+  --fs-xs:    11px;   /* meta labels, table footnotes */
+  --fs-sm:    12px;   /* table header, small meta */
+  --fs-base:  14px;   /* default body, table cells, buttons */
+  --fs-md:    15px;   /* form inputs, list rows */
+  --fs-lg:    16px;   /* card headers */
+  --fs-xl:    18px;   /* section titles */
+  --fs-h2:    20px;
+  --fs-h1:    24px;   /* page title */
+  --fs-display: 28px; /* dashboard greeting */
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+
+  --lh-tight:  1.25;
+  --lh-base:   1.45;
+  --lh-loose:  1.6;
+
+  /* ----------  SPACING  -------------------------------------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-7:  32px;
+  --sp-8:  40px;
+  --sp-9:  56px;
+
+  /* ----------  RADII  ---------------------------------------- */
+  --r-sm:  3px;
+  --r-md:  4px;        /* cards, inputs, tags */
+  --r-lg:  6px;        /* buttons, large cards */
+  --r-pill: 999px;
+
+  /* ----------  ELEVATION  ------------------------------------ */
+  /* Flat by default. Use only for popovers / dropdowns. */
+  --shadow-none:   none;
+  --shadow-card:   0 1px 0 rgba(20, 40, 50, 0.03);
+  --shadow-pop:    0 6px 16px rgba(20, 40, 50, 0.10), 0 2px 4px rgba(20, 40, 50, 0.06);
+  --shadow-modal:  0 24px 60px rgba(15, 35, 45, 0.20);
+
+  /* ----------  Z-INDEX  -------------------------------------- */
+  --z-header:  100;
+  --z-dropdown: 200;
+  --z-modal:    400;
+  --z-toast:    500;
+
+  /* ----------  MOTION  --------------------------------------- */
+  --ease-standard: cubic-bezier(.2,.0,.2,1);
+  --t-fast: 120ms;
+  --t-base: 180ms;
+  --t-slow: 260ms;
+}
+
+/* ============================================================
+   Semantic typography
+   ============================================================ */
+
+html, body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--color-text-main);
+  background: var(--color-bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, .h1 {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-regular);   /* DATEV-style: never extra bold */
+  color: var(--color-primary);
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--sp-4);
+  letter-spacing: -0.01em;
+}
+
+h2, .h2 {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-main);
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--sp-3);
+}
+
+h3, .h3 {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-main);
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--sp-2);
+}
+
+h4, .h4 {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-main);
+  margin: 0 0 var(--sp-2);
+}
+
+p { margin: 0 0 var(--sp-3); }
+
+.muted    { color: var(--color-text-muted); }
+.subtle   { color: var(--color-text-subtle); }
+.kpi      { font-weight: var(--fw-bold); color: var(--color-text-main); }
+
+.label {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--fw-regular);
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}

@@ -1,0 +1,224 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "ui_kits/app/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Open Sans))/i]",
+        "message": "Font not provided by the design system. Available: Open Sans."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--color-action",
+      "--color-action-hover",
+      "--color-action-pressed",
+      "--color-action-tint",
+      "--color-bg-app",
+      "--color-bg-card",
+      "--color-bg-hover",
+      "--color-bg-sidebar",
+      "--color-bg-subtle",
+      "--color-border",
+      "--color-border-dashed",
+      "--color-border-strong",
+      "--color-danger",
+      "--color-danger-bg",
+      "--color-info",
+      "--color-info-bg",
+      "--color-primary",
+      "--color-primary-dark",
+      "--color-primary-hover",
+      "--color-primary-tint",
+      "--color-success",
+      "--color-success-bg",
+      "--color-tag-amber",
+      "--color-tag-amber-bg",
+      "--color-tag-grey",
+      "--color-tag-grey-bg",
+      "--color-tag-petrol",
+      "--color-tag-petrol-bg",
+      "--color-tag-violet",
+      "--color-tag-violet-bg",
+      "--color-text-inverse",
+      "--color-text-link",
+      "--color-text-main",
+      "--color-text-muted",
+      "--color-text-subtle",
+      "--color-warning-bg",
+      "--color-warning-border",
+      "--color-warning-text",
+      "--ease-standard",
+      "--font-mono",
+      "--font-sans",
+      "--fs-base",
+      "--fs-display",
+      "--fs-h1",
+      "--fs-h2",
+      "--fs-lg",
+      "--fs-md",
+      "--fs-sm",
+      "--fs-xl",
+      "--fs-xs",
+      "--fw-bold",
+      "--fw-medium",
+      "--fw-regular",
+      "--fw-semibold",
+      "--lh-base",
+      "--lh-loose",
+      "--lh-tight",
+      "--r-lg",
+      "--r-md",
+      "--r-pill",
+      "--r-sm",
+      "--shadow-card",
+      "--shadow-modal",
+      "--shadow-none",
+      "--shadow-pop",
+      "--sp-1",
+      "--sp-2",
+      "--sp-3",
+      "--sp-4",
+      "--sp-5",
+      "--sp-6",
+      "--sp-7",
+      "--sp-8",
+      "--sp-9",
+      "--t-base",
+      "--t-fast",
+      "--t-slow",
+      "--z-dropdown",
+      "--z-header",
+      "--z-modal",
+      "--z-toast"
+    ],
+    "tokenKinds": {
+      "--color-primary": "color",
+      "--color-primary-hover": "color",
+      "--color-primary-dark": "color",
+      "--color-primary-tint": "color",
+      "--color-action": "color",
+      "--color-action-hover": "color",
+      "--color-action-pressed": "color",
+      "--color-action-tint": "color",
+      "--color-bg-app": "color",
+      "--color-bg-card": "color",
+      "--color-bg-sidebar": "color",
+      "--color-bg-hover": "color",
+      "--color-bg-subtle": "color",
+      "--color-border": "color",
+      "--color-border-strong": "color",
+      "--color-border-dashed": "color",
+      "--color-text-main": "font",
+      "--color-text-muted": "font",
+      "--color-text-subtle": "font",
+      "--color-text-inverse": "font",
+      "--color-text-link": "font",
+      "--color-warning-bg": "color",
+      "--color-warning-border": "color",
+      "--color-warning-text": "font",
+      "--color-success": "color",
+      "--color-success-bg": "color",
+      "--color-danger": "color",
+      "--color-danger-bg": "color",
+      "--color-info": "color",
+      "--color-info-bg": "color",
+      "--color-tag-violet": "color",
+      "--color-tag-violet-bg": "color",
+      "--color-tag-petrol": "color",
+      "--color-tag-petrol-bg": "color",
+      "--color-tag-amber": "color",
+      "--color-tag-amber-bg": "color",
+      "--color-tag-grey": "color",
+      "--color-tag-grey-bg": "color",
+      "--font-sans": "font",
+      "--font-mono": "font",
+      "--fs-xs": "spacing",
+      "--fs-sm": "spacing",
+      "--fs-base": "spacing",
+      "--fs-md": "spacing",
+      "--fs-lg": "spacing",
+      "--fs-xl": "spacing",
+      "--fs-h2": "spacing",
+      "--fs-h1": "spacing",
+      "--fs-display": "spacing",
+      "--fw-regular": "other",
+      "--fw-medium": "other",
+      "--fw-semibold": "other",
+      "--fw-bold": "other",
+      "--lh-tight": "other",
+      "--lh-base": "other",
+      "--lh-loose": "other",
+      "--sp-1": "spacing",
+      "--sp-2": "spacing",
+      "--sp-3": "spacing",
+      "--sp-4": "spacing",
+      "--sp-5": "spacing",
+      "--sp-6": "spacing",
+      "--sp-7": "spacing",
+      "--sp-8": "spacing",
+      "--sp-9": "spacing",
+      "--r-sm": "spacing",
+      "--r-md": "spacing",
+      "--r-lg": "spacing",
+      "--r-pill": "spacing",
+      "--shadow-none": "shadow",
+      "--shadow-card": "shadow",
+      "--shadow-pop": "shadow",
+      "--shadow-modal": "shadow",
+      "--z-header": "other",
+      "--z-dropdown": "other",
+      "--z-modal": "other",
+      "--z-toast": "other",
+      "--ease-standard": "other",
+      "--t-fast": "other",
+      "--t-base": "other",
+      "--t-slow": "other"
+    },
+    "fontFamilies": [
+      "Open Sans"
+    ]
+  }
+}

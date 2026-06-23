@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/duo-refresh-design-system-c48bb89f-dd6a-4d3d-9439-0db234d30533/colors_and_type.css">
+  <link rel="stylesheet" href="_ds/duo-refresh-design-system-c48bb89f-dd6a-4d3d-9439-0db234d30533/preview/_base.css">
+  <link rel="stylesheet" href="_ds/duo-refresh-design-system-c48bb89f-dd6a-4d3d-9439-0db234d30533/ui_kits/app/app.css">
+  <script src="_ds/duo-refresh-design-system-c48bb89f-dd6a-4d3d-9439-0db234d30533/_ds_bundle.js"></script>
+  <style>
+    html, body { background: var(--color-bg-app); }
+    @keyframes duoShake {
+      10%, 90% { transform: translateX(-1px); }
+      20%, 80% { transform: translateX(2px); }
+      30%, 50%, 70% { transform: translateX(-6px); }
+      40%, 60% { transform: translateX(6px); }
+    }
+    .duo-shake { animation: duoShake .5s cubic-bezier(.2,0,.2,1); }
+    /* Auf Smartphones füllt die Karte den ganzen Bildschirm – kein Petrol-Rahmen. */
+    @media (max-width: 520px) {
+      html, body { background: #fff; }
+      .game-root { background: #fff !important; }
+      .game-card { max-width: none !important; }
+    }
+  </style>
+</helmet>
+
+<div class="game-root" style="min-height:100dvh;background:var(--color-bg-app);display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);">
+  <div class="game-card" style="width:100%;max-width:460px;min-height:100dvh;background:var(--color-bg-card);display:flex;flex-direction:column;overflow-y:auto;">
+
+    <!-- ============ TOP BAR (Marke + Stoppuhr) ============ -->
+    <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--color-border);flex-shrink:0;">
+      <div style="flex:1;min-width:0;display:flex;align-items:center;gap:9px;">
+        <img src="uploads/DUO_Refresh_Logo-transparent.png" alt="DUO Refresh" style="height:40px;width:auto;display:block;flex-shrink:0;">
+        <span style="font-weight:600;color:var(--color-primary);font-size:15px;letter-spacing:.2px;">DUO <span style="font-weight:400;color:var(--color-text-muted);">Refresh</span></span>
+      </div>
+      <div style="flex-shrink:0;display:flex;justify-content:center;">
+        <sc-if value="{{ isPlay }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:0;background:var(--color-bg-subtle);border:1px solid var(--color-border);border-radius:999px;padding:5px 9px 5px 8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2C5A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            <span style="font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;color:var(--color-text-main);min-width:46px;text-align:left;padding-left:6px;">{{ timerText }}</span>
+          </div>
+        </sc-if>
+      </div>
+      <div style="flex:1;min-width:0;display:flex;justify-content:flex-end;align-items:center;">
+        <img src="uploads/apodoco_transparent.png" alt="apodoco" title="Partner: apodoco" style="height: 40px; width: auto; display: block; flex-shrink: 0">
+      </div>
+    </div>
+
+    <!-- ============ SCREEN 0 — ERÖFFNUNG ============ -->
+    <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:32px 24px;">
+
+        <div style="text-align:center;">
+          <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-subtle);font-weight:600;margin-bottom:8px;">Zahlen-Sprint</div>
+          <h1 style="font-size:24px;font-weight:400;color:var(--color-primary);margin:0;letter-spacing:-0.01em;">Erkenne die Reihe.<br>Tippe die nächste Zahl.</h1>
+        </div>
+
+        <!-- Beispielreihe zur Erklärung -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;">
+          <div style="min-width:44px;height:52px;display:flex;align-items:center;justify-content:center;background:var(--color-primary-tint);border:1px solid var(--color-border);border-radius:10px;color:var(--color-primary);font-size:20px;font-weight:700;">3</div>
+          <div style="min-width:44px;height:52px;display:flex;align-items:center;justify-content:center;background:var(--color-primary-tint);border:1px solid var(--color-border);border-radius:10px;color:var(--color-primary);font-size:20px;font-weight:700;">6</div>
+          <div style="min-width:44px;height:52px;display:flex;align-items:center;justify-content:center;background:var(--color-primary-tint);border:1px solid var(--color-border);border-radius:10px;color:var(--color-primary);font-size:20px;font-weight:700;">12</div>
+          <div style="min-width:44px;height:52px;display:flex;align-items:center;justify-content:center;background:var(--color-primary-tint);border:1px solid var(--color-border);border-radius:10px;color:var(--color-primary);font-size:20px;font-weight:700;">24</div>
+          <div style="min-width:44px;height:52px;display:flex;align-items:center;justify-content:center;background:var(--color-action-tint);border:2px solid var(--color-action);border-radius:10px;color:var(--color-action-pressed);font-size:22px;font-weight:700;">48</div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--color-text-subtle);margin:-12px 0 0;">Beispiel: jede Zahl ist das Doppelte – also <b style="color:var(--color-text-muted);">48</b>.</p>
+
+        <sc-if value="{{ zeigeGiveaway }}" hint-placeholder-val="{{ true }}">
+          <p style="text-align:center;font-size:15px;color:var(--color-text-main);line-height:1.55;margin:0;">Eine Stoppuhr läuft mit. Löse die Reihe in unter <b>{{ gewinnZeitGanz }} Sekunden</b> und sichere dir am Stand deinen <b>Kochlöffel + Knorr Zahlensuppe</b>.</p>
+        </sc-if>
+        <sc-if value="{{ keinGiveaway }}" hint-placeholder-val="{{ false }}">
+          <p style="text-align:center;font-size:15px;color:var(--color-text-main);line-height:1.55;margin:0;">Eine Stoppuhr läuft mit. Löse die Reihe in unter <b>{{ gewinnZeitGanz }} Sekunden</b>.</p>
+        </sc-if>
+
+        <button onClick="{{ onStart }}" style="height:58px;background:var(--color-action);color:#fff;border:none;border-radius:10px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .12s cubic-bezier(.2,0,.2,1);" style-hover="background:var(--color-action-hover);" style-active="background:var(--color-action-pressed);">Spiel starten</button>
+
+        <p style="text-align:center;font-size:12px;color:var(--color-text-subtle);line-height:1.5;margin:0;">Unser Projekt: Ein Redesign von DATEV Unternehmen Online. Frag uns am Stand vor dem Raum M2.03 (1. OG).</p>
+
+        <sc-if value="{{ zeigeGiveaway }}" hint-placeholder-val="{{ true }}">
+          <p style="text-align:center;font-size:11px;color:var(--color-text-subtle);line-height:1.5;margin:-8px 0 0;">Einmalig pro Person, nur solange der Vorrat reicht.</p>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 1 — SPIEL ============ -->
+    <sc-if value="{{ isPlay }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;display:flex;flex-direction:column;">
+
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:30px;padding:24px 24px 8px;">
+          <div style="text-align:center;">
+            <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-subtle);font-weight:600;margin-bottom:8px;">Zahlenreihe</div>
+            <h1 style="font-size:22px;font-weight:400;color:var(--color-primary);margin:0;letter-spacing:-0.01em;">Welche Zahl folgt?</h1>
+          </div>
+
+          <div class="{{ feedbackClass }}" style="display:flex;flex-wrap:nowrap;gap:8px;justify-content:center;align-items:center;width:100%;">
+            <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="5">
+              <sc-if value="{{ t.q }}" hint-placeholder-val="{{ false }}">
+                <div style="flex:1 1 0;min-width:0;max-width:64px;height:70px;padding:0 4px;display:flex;align-items:center;justify-content:center;background:var(--color-action-tint);border:2px solid var(--color-action);border-radius:12px;color:var(--color-action-pressed);font-size:clamp(22px,6.6vw,32px);font-weight:700;line-height:1;">?</div>
+              </sc-if>
+              <sc-if value="{{ t.n }}" hint-placeholder-val="{{ true }}">
+                <div style="flex:1 1 0;min-width:0;max-width:64px;height:70px;padding:0 4px;display:flex;align-items:center;justify-content:center;background:var(--color-primary-tint);border:1px solid var(--color-border);border-radius:12px;color:var(--color-primary);font-size:clamp(20px,6.2vw,28px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums;">{{ t.label }}</div>
+              </sc-if>
+            </sc-for>
+          </div>
+        </div>
+
+        <form onSubmit="{{ onSubmit }}" style="padding:18px 24px 26px;border-top:1px solid var(--color-border);display:flex;flex-direction:column;gap:12px;flex-shrink:0;">
+          <label for="duo-answer" style="font-size:13px;color:var(--color-text-muted);text-align:center;">Nächste Zahl eingeben</label>
+          <input id="duo-answer" ref="{{ inputRef }}" value="{{ value }}" onInput="{{ onInput }}" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="go" aria-label="Nächste Zahl der Reihe" placeholder="?" style="width:100%;height:60px;text-align:center;font-size:26px;font-weight:700;color:var(--color-text-main);border:1px solid var(--color-border-strong);border-radius:10px;outline:none;font-family:inherit;background:#fff;" style-focus="border-color:var(--color-primary);box-shadow:0 0 0 3px rgba(44,90,106,.14);">
+          <div style="min-height:20px;text-align:center;">
+            <sc-if value="{{ wrong }}" hint-placeholder-val="{{ false }}">
+              <span style="color:var(--color-danger);font-size:14px;font-weight:600;">Nicht ganz – probier's nochmal.</span>
+            </sc-if>
+          </div>
+          <button type="submit" style="height:58px;background:var(--color-action);color:#fff;border:none;border-radius:10px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .12s cubic-bezier(.2,0,.2,1);" style-hover="background:var(--color-action-hover);" style-active="background:var(--color-action-pressed);">Prüfen</button>
+        </form>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 2 — GEWINN ============ -->
+    <sc-if value="{{ isWin }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:32px 24px;">
+        <div style="width:66px;height:66px;border-radius:50%;background:var(--color-action-tint);display:flex;align-items:center;justify-content:center;align-self:center;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#6A9A33" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        </div>
+
+        <div style="text-align:center;">
+          <h1 style="font-size:25px;font-weight:600;color:var(--color-primary);margin:0 0 6px;letter-spacing:-0.01em;">{{ winHeading }}</h1>
+          <p style="margin:0;font-size:14px;color:var(--color-text-muted);">Du hast das Rätsel in unter {{ gewinnZeitGanz }} Sekunden gelöst.</p>
+        </div>
+
+        <!-- Giveaway-Karte mit Produktfoto · nur sichtbar, solange Vorrat reicht (GIVEAWAYS_VERFUEGBAR) -->
+        <sc-if value="{{ zeigeGiveaway }}" hint-placeholder-val="{{ true }}">
+          <div style="background:var(--color-action-tint);border:1px solid #CFE3AC;border-radius:12px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;">
+            <div style="font-weight:700;color:var(--color-text-main);font-size:19px;letter-spacing:-0.01em;">Dein Giveaway wartet!</div>
+            <img src="uploads/gewinn.png" alt="Kochlöffel + Knorr Zahlensuppe" style="width:150px;height:auto;display:block;">
+            <div style="font-size:13px;color:var(--color-text-main);line-height:1.45;">Zeig dieses Ergebnis am Stand vor dem Raum M2.03 (1. OG) und sichere dir deinen <b>Kochlöffel + Knorr Zahlensuppe</b>.</div>
+          </div>
+        </sc-if>
+
+        <p style="text-align:center;font-size:15px;color:var(--color-text-main);line-height:1.55;margin:4px 0 0;">Wenn du das hier schnell lösen konntest – stell dir vor, wie eine Software aussehen muss, damit echte Aufgaben genauso klar sind.</p>
+
+        <p style="text-align:center;font-size:12px;color:var(--color-text-subtle);line-height:1.5;margin:0;">Wie das in echt aussieht? Frag uns nach unserem Redesign von DATEV Unternehmen Online am Stand vor dem Raum M2.03 (1.OG).</p>
+
+        <button onClick="{{ onReplay }}" style="height:54px;background:#fff;color:var(--color-text-main);border:1px solid var(--color-border-strong);border-radius:10px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;margin-top:4px;transition:background .12s cubic-bezier(.2,0,.2,1);" style-hover="background:var(--color-bg-hover);">Nochmal spielen</button>
+      </div>
+    </sc-if>
+
+    <!-- ============ SCREEN 3 — ÜBER ZEIT ============ -->
+    <sc-if value="{{ isOver }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:32px 24px;">
+        <div style="width:66px;height:66px;border-radius:50%;background:var(--color-warning-bg);display:flex;align-items:center;justify-content:center;align-self:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D69020" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        </div>
+
+        <div style="text-align:center;">
+          <h1 style="font-size:25px;font-weight:600;color:var(--color-primary);margin:0 0 6px;letter-spacing:-0.01em;">{{ overHeading }}</h1>
+          <p style="margin:0;font-size:14px;color:var(--color-text-muted);">Die {{ gewinnZeitGanz }} Sekunden sind um – diesmal hat's nicht gereicht. Noch ein Versuch?</p>
+        </div>
+
+        <button onClick="{{ onReplay }}" style="height:58px;background:var(--color-action);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:17px;cursor:pointer;font-family:inherit;transition:background .12s cubic-bezier(.2,0,.2,1);" style-hover="background:var(--color-action-hover);" style-active="background:var(--color-action-pressed);">Nochmal versuchen</button>
+
+        <p style="text-align:center;font-size:15px;color:var(--color-text-main);line-height:1.55;margin:8px 0 0;">Schnelle Klarheit ist Übungssache – und genau das ist unser Anspruch an gute Software: Selbst komplexe Aufgaben sollen sofort verständlich sein.</p>
+
+        <p style="text-align:center;font-size:12px;color:var(--color-text-subtle);line-height:1.5;margin:0;">Wie das in echt aussieht? Frag uns nach unserem Redesign von DATEV Unternehmen Online.</p>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  /* =====================================================================
+     KONFIGURATION  ·  vom Standteam direkt hier anpassbar
+     ===================================================================== */
+
+  // Giveaways vor Ort noch vorrätig? true = Giveaway-Karte wird angezeigt.
+  // Auf false setzen, sobald am Stand keine Giveaways mehr übrig sind.
+  GIVEAWAYS_VERFUEGBAR = true;
+
+  // Zeitgrenze für den Gewinn (Sekunden). Wer schneller löst, gewinnt.
+  GEWINN_ZEIT_SEKUNDEN = 25.0;
+
+  // Aktive Regeln, aus denen pro Runde zufällig gewählt wird:
+  //   'x2'   = geometrisch, jeweils mal 2
+  //   'x3'   = geometrisch, jeweils mal 3
+  //   'plus' = arithmetisch, jeweils + konstanter Wert
+  REGELN = ['x2', 'x3', 'plus'];
+
+  MAX_WERT = 100;                 // kein Glied der Reihe (auch das Ergebnis) darf größer sein
+  PLUS_MIN = 4;  PLUS_MAX = 19;   // Spanne des konstanten Summanden (+k)
+
+  /* ===================================================================== */
+
+  inputRef = React.createRef();
+
+  state = {
+    screen: 'intro',  // 'intro' | 'play' | 'win' | 'overtime'
+    puzzle: null,     // { shown:[4], answer:Number, rule }
+    value: '',
+    wrong: false,
+    elapsed: 0,       // Sekunden seit Rätselstart
+  };
+
+  // Start erst per Button -> Timer beginnt nicht schon beim Öffnen der Seite.
+  componentWillUnmount() { this.clearTimer(); }
+
+  // ---- Rätsel-Erzeugung -------------------------------------------------
+  randInt(min, max) { return min + Math.floor(Math.random() * (max - min + 1)); }
+
+  makePuzzle() {
+    while (true) {
+      const rule = this.REGELN[Math.floor(Math.random() * this.REGELN.length)];
+      let terms = [];
+
+      if (rule === 'x2' || rule === 'x3') {
+        const f = rule === 'x2' ? 2 : 3;
+        // Größter Startwert, bei dem das Ergebnis (start * f^4) noch <= MAX_WERT ist.
+        const maxStart = Math.floor(this.MAX_WERT / Math.pow(f, 4));
+        if (maxStart < 1) continue;                 // Faktor passt nicht in die Obergrenze -> neue Regel
+        const start = this.randInt(1, maxStart);
+        terms = [start];
+        for (let i = 0; i < 4; i++) terms.push(terms[terms.length - 1] * f);
+      } else {
+        const k = this.randInt(this.PLUS_MIN, this.PLUS_MAX);
+        // Ergebnis = start + 4k muss <= MAX_WERT bleiben.
+        const maxStart = this.MAX_WERT - 4 * k;
+        if (maxStart < 1) continue;                 // Schrittweite zu groß -> neue Regel
+        const start = this.randInt(1, maxStart);
+        terms = [start];
+        for (let i = 0; i < 4; i++) terms.push(terms[terms.length - 1] + k);
+      }
+
+      // Alle Glieder positive ganze Zahlen <= MAX_WERT? Innerhalb der aktiven
+      // Regeln ist jede so erzeugte Reihe eindeutig (mal-2/mal-3/+k schließen
+      // sich gegenseitig aus) -> sonst neu würfeln.
+      if (terms[4] <= this.MAX_WERT) {
+        return { shown: terms.slice(0, 4), answer: terms[4], rule };
+      }
+    }
+  }
+
+  // ---- Timer ------------------------------------------------------------
+  clearTimer() { if (this.timer) { clearInterval(this.timer); this.timer = null; } }
+
+  newGame() {
+    this.clearTimer();
+    const puzzle = this.makePuzzle();
+    this.startTs = performance.now();           // Stoppuhr startet beim Anzeigen
+    this.setState({ screen: 'play', puzzle, value: '', wrong: false, elapsed: 0 });
+    this.timer = setInterval(() => {
+      const elapsed = (performance.now() - this.startTs) / 1000;
+      if (elapsed >= this.GEWINN_ZEIT_SEKUNDEN) {
+        // Zeitgrenze überschritten -> sofort verloren, Rätsel wird nicht gelöst.
+        this.clearTimer();
+        this.setState({ screen: 'overtime', elapsed: this.GEWINN_ZEIT_SEKUNDEN });
+      } else {
+        this.setState({ elapsed });
+      }
+    }, 100);
+    this.focusSoon();
+  }
+
+  focusSoon() {
+    setTimeout(() => { if (this.inputRef.current) this.inputRef.current.focus(); }, 60);
+  }
+
+  // ---- Antwortprüfung ---------------------------------------------------
+  submit(e) {
+    if (e) e.preventDefault();
+    const raw = (this.state.value || '').trim();
+    const guess = parseInt(raw, 10);
+    if (raw === '' || Number.isNaN(guess)) { this.miss(); return; }
+
+    if (guess === this.state.puzzle.answer) {
+      this.clearTimer();                                   // Timer stoppen
+      const final = (performance.now() - this.startTs) / 1000;
+      const won = final < this.GEWINN_ZEIT_SEKUNDEN;
+      this.setState({ screen: won ? 'win' : 'overtime', elapsed: final });
+    } else {
+      this.miss();                                         // Timer läuft weiter
+    }
+  }
+
+  miss() {
+    this.setState({ wrong: true, value: '' });
+    setTimeout(() => this.setState({ wrong: false }), 550);
+    this.focusSoon();
+  }
+
+  // ---- Render-Werte -----------------------------------------------------
+  fmt(s) { return (Math.round(s * 10) / 10).toFixed(1).replace('.', ','); }
+
+  renderVals() {
+    const s = this.state;
+    const p = s.puzzle;
+    const tiles = p
+      ? p.shown.map(n => ({ label: String(n), n: true, q: false }))
+              .concat([{ label: '?', n: false, q: true }])
+      : [];
+    const t = this.fmt(s.elapsed || 0);
+
+    return {
+      isIntro: s.screen === 'intro',
+      isPlay: s.screen === 'play',
+      isWin: s.screen === 'win',
+      isOver: s.screen === 'overtime',
+      zeigeGiveaway: this.GIVEAWAYS_VERFUEGBAR,
+      keinGiveaway: !this.GIVEAWAYS_VERFUEGBAR,
+      tiles,
+      timerText: t + ' s',
+
+      gewinnZeit: this.fmt(this.GEWINN_ZEIT_SEKUNDEN),
+      gewinnZeitGanz: String(Math.round(this.GEWINN_ZEIT_SEKUNDEN)),
+      winHeading: 'Geschafft in ' + t + ' Sekunden!',
+      overHeading: 'Zeit abgelaufen!',
+      value: s.value || '',
+      wrong: !!s.wrong,
+      feedbackClass: s.wrong ? 'duo-shake' : '',
+      inputRef: this.inputRef,
+      onInput: (e) => this.setState({ value: (e.target.value || '').replace(/[^0-9]/g, '') }),
+      onSubmit: (e) => this.submit(e),
+      onStart: () => this.newGame(),
+      onReplay: () => this.newGame(),
+    };
+  }
+}
+</script>
+</body>
+</html>
